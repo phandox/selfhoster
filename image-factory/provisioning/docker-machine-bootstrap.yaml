@@ -1,0 +1,40 @@
+---
+- name: 'Provision snapshot with Docker Engine'
+  hosts: default
+
+  vars:
+    docker_gpg_key_path: /usr/share/keyrings/docker-archive-keyring.gpg
+
+  tasks:
+    - name: Download Docker's GPG key and dearmor it
+      ansible.builtin.shell: 
+        cmd: "wget -O - https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o {{ docker_gpg_key_path }}"
+        creates: "{{ docker_gpg_key_path }}"
+        warn: false
+
+    - name: Add Docker repository
+      ansible.builtin.apt_repository:
+        repo: "deb [signed-by={{ docker_gpg_key_path }}] https://download.docker.com/linux/ubuntu {{ ansible_facts['distribution_release'] }} stable"
+        state: present
+
+    - name: Install Docker engine
+      apt: 
+        name:
+           - docker-ce
+           - docker-ce-cli
+           - containerd.io
+
+    - name: Enable Docker on boot
+      ansible.builtin.service:
+        name: docker.service
+        enabled: yes
+        state: started
+
+    - name: Enable containerd on boot
+      ansible.builtin.service:
+        name: containerd.service
+        enabled: yes
+        state: started
+
+
+
