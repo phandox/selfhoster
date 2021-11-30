@@ -36,11 +36,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         packer=1.7.8 && \
     rm -rf /var/lib/apt/lists/*
 
-#FROM ubuntu@sha256:7cc0576c7c0ec2384de5cbf245f41567e922aab1b075f3e8ad565f508032df17
 FROM python:3.9.7
 
 # Install Ansible
 COPY --from=compile-ansible-stage /opt/ansible /opt/ansible
 COPY --from=packer-from-apt /bin/packer /bin/packer
 COPY provision_with_ansible.sh /provision_with_ansible.sh
-ENTRYPOINT [ "/bin/packer" ]
+COPY packer_wrapper.sh /bin/packer_wrapper.sh
+ENTRYPOINT [ "/bin/packer_wrapper.sh" ]
