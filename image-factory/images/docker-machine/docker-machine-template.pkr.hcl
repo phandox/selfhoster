@@ -21,7 +21,7 @@ build {
     provisioner "ansible" {
         command       = "/provision_with_ansible.sh"
         use_proxy     = false
-        playbook_file = "provisioning/docker-machine-bootstrap.yaml"
+        playbook_file = "docker-machine-bootstrap.yaml"
         user          = "root"
     }
 }
