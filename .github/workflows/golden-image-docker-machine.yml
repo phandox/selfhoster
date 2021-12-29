@@ -1,21 +1,20 @@
-name: Create Docker-machine golden image
+name: Release docker-machine golden image
 
 on:
   workflow_dispatch:
     inputs:
       builder-version:
-        description: 'version of packer-ansible Docker image to use'
         default: '0.1.0'
 
 env:
   BUILDER_IMAGE: ghcr.io/phandox/packer-ansible
   WORKDIR: /workplace
-  DOCKER_CTX: images/docker-machine
+  PACKER_TMPL_PATH: image-factory/images/docker-machine
   DO_TOKEN: ${{ secrets.DO_TOKEN }}
 
 
 jobs:
-  create-golden-image:
+  release:
     runs-on: ubuntu-20.04
 
     steps:
@@ -26,7 +25,7 @@ jobs:
       run: |
         docker run \
         -e PKR_VAR_DO_TOKEN="${{ env.DO_TOKEN }}" \
-        -v "${PWD}/${{ env.DOCKER_CTX }}:${{ env.WORKDIR }}:ro" \
+        -v "${GITHUB_WORKSPACE}/${{ env.PACKER_TMPL_PATH }}:${{ env.WORKDIR }}:ro" \
         -w "${{ env.WORKDIR }}" \
         "${{ env.BUILDER_IMAGE }}:${{ github.event.inputs.builder-version }}" \
         validate .
@@ -34,7 +33,7 @@ jobs:
       run: |
         docker run \
         -e PKR_VAR_DO_TOKEN="${{ env.DO_TOKEN }}" \
-        -v "${PWD}/${{ env.DOCKER_CTX }}:${{ env.WORKDIR }}:ro" \
+        -v "${GITHUB_WORKSPACE}/${{ env.PACKER_TMPL_PATH }}:${{ env.WORKDIR }}:ro" \
         -w "${{ env.WORKDIR }}" \
         "${{ env.BUILDER_IMAGE }}:${{ github.event.inputs.builder-version }}" \
         build .
