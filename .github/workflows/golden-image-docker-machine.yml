@@ -10,7 +10,7 @@ on:
 env:
   BUILDER_IMAGE: ghcr.io/phandox/packer-ansible
   WORKDIR: /workplace
-  DOCKER_CTX: images/docker-machine
+  DOCKER_CTX: image-factory/images/docker-machine
   DO_TOKEN: ${{ secrets.DO_TOKEN }}
 
 
@@ -21,12 +21,6 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
-
-    - name: Print content of checked out repo
-      run: |
-        echo "GITHUB_WORKSPACE: ${GITHUB_WORKSPACE}"
-        ls -lR "${GITHUB_WORKSPACE}"
-        ls -l "${GITHUB_WORKSPACE}/${{ env.DOCKER_CTX }}"
 
     - name: Validate Packer template 
       run: |
