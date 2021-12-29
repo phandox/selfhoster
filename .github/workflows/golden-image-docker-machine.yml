@@ -26,7 +26,7 @@ jobs:
       run: |
         docker run \
         -e PKR_VAR_DO_TOKEN="${{ env.DO_TOKEN }}" \
-        -v "${PWD}/${{ env.DOCKER_CTX }}:${{ env.WORKDIR }}:ro" \
+        -v "${GITHUB_WORKSPACE}/${{ env.DOCKER_CTX }}:${{ env.WORKDIR }}:ro" \
         -w "${{ env.WORKDIR }}" \
         "${{ env.BUILDER_IMAGE }}:${{ github.event.inputs.builder-version }}" \
         validate .
@@ -34,7 +34,7 @@ jobs:
       run: |
         docker run \
         -e PKR_VAR_DO_TOKEN="${{ env.DO_TOKEN }}" \
-        -v "${PWD}/${{ env.DOCKER_CTX }}:${{ env.WORKDIR }}:ro" \
+        -v "${GITHUB_WORKSPACE}/${{ env.DOCKER_CTX }}:${{ env.WORKDIR }}:ro" \
         -w "${{ env.WORKDIR }}" \
         "${{ env.BUILDER_IMAGE }}:${{ github.event.inputs.builder-version }}" \
         build .
