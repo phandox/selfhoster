@@ -8,7 +8,7 @@ variable "env" {
 }
 
 variable "ssh_keys" {
-  default     = ["31254688"]
+  default     = ["37082527"]
   description = "IDs of ssh keys stored in Digital Ocean to be injected to VM. Get the values via `doctl compute ssh-keys list`"
   type        = list(string)
 }
