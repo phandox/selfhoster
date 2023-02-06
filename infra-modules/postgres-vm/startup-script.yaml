@@ -1,0 +1,20 @@
+#cloud-config
+users:
+  - name: ansible
+    ssh-authorized-keys:
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF/Tj6GnfEMeSDLpE+L3kbUZkVtbLxO7Js+QwCTS/yH1
+    sudo: ["ALL=(ALL) NOPASSWD:ALL"]
+    shell: /bin/bash
+    lock_passwd: true # disable password login
+    groups: users,admin,wheel
+
+# on first boot make sure packages are updated
+package_update: true
+package_upgrade: true
+package_reboot_if_required: true
+
+runcmd:
+  - ufw default deny incoming
+  - ufw default allow outgoing
+  - ufw allow ssh
+  - ufw --force enable

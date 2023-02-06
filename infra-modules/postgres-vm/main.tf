@@ -16,6 +16,7 @@ resource "digitalocean_droplet" "psql-vm" {
   ssh_keys   = var.ssh_keys
   tags       = concat([digitalocean_tag.psql-fw.id], var.tags)
   vpc_uuid   = var.vpc.id
+  user_data  = file("startup-script.yaml")
 }
 
 resource "digitalocean_firewall" "db-fw" {
