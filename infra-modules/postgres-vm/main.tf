@@ -25,7 +25,7 @@ resource "digitalocean_firewall" "db-fw" {
 
   inbound_rule {
     protocol         = "tcp"
-    port_range       = "5431"
+    port_range       = "5432"
     source_addresses = [var.vpc.ip_range]
   }
 }
