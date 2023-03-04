@@ -29,3 +29,9 @@ resource "digitalocean_firewall" "db-fw" {
     source_addresses = [var.vpc.ip_range]
   }
 }
+
+resource "digitalocean_volume_attachment" "persistent-volume" {
+  count      = var.volume_id != null ? 1 : 0
+  droplet_id = digitalocean_droplet.psql-vm[local.instances[0]].id
+  volume_id  = var.volume_id
+}

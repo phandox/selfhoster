@@ -35,3 +35,9 @@ variable "vpc" {
   })
   description = "VPC network to where instance live"
 }
+
+variable "volume_id" {
+  type        = string
+  default     = null
+  description = "Volume ID for attaching persistent storage to instance"
+}
