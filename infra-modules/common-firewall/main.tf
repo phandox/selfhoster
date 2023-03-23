@@ -1,13 +1,17 @@
+variable "env" {
+  type = string
+}
+
 resource "digitalocean_tag" "egress-internet-fw" {
-  name = "egress-internet-fw"
+  name = "egress-internet-fw-${var.env}"
 }
 
 resource "digitalocean_tag" "ssh-fw" {
-  name = "ssh-fw"
+  name = "ssh-fw-${var.env}"
 }
 
 resource "digitalocean_firewall" "egress-internet-fw" {
-  name = "egress-internet"
+  name = "egress-internet-${var.env}"
   tags = [digitalocean_tag.egress-internet-fw.id]
 
   outbound_rule {
@@ -27,7 +31,7 @@ resource "digitalocean_firewall" "egress-internet-fw" {
 }
 
 resource "digitalocean_firewall" "ingress-ssh" {
-  name = "ingress-ssh"
+  name = "ingress-ssh-${var.env}"
   tags = [digitalocean_tag.ssh-fw.id]
   inbound_rule {
     protocol = "tcp"

@@ -1,9 +1,9 @@
 locals {
-  instances = [for idx in range(var.instance_count) : format("psql-vm-%s-%03d", var.region, idx + 1)]
+  instances = [for idx in range(var.instance_count) : format("psql-vm-%s-%s-%03d", var.region, var.env, idx + 1)]
 }
 
 resource "digitalocean_tag" "psql-fw" {
-  name = "psql-fw"
+  name = "psql-fw-${var.env}"
 }
 resource "digitalocean_droplet" "psql-vm" {
   for_each   = toset(local.instances)
@@ -20,7 +20,7 @@ resource "digitalocean_droplet" "psql-vm" {
 }
 
 resource "digitalocean_firewall" "db-fw" {
-  name = "allow-psql"
+  name = "allow-psql-${var.env}"
   tags = [digitalocean_tag.psql-fw.id]
 
   inbound_rule {
