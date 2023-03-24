@@ -41,7 +41,7 @@ resource "digitalocean_vpc" "vpc" {
 
 output "vpc" {
   value = {
-    id = digitalocean_vpc.vpc.id
+    id       = digitalocean_vpc.vpc.id
     ip_range = digitalocean_vpc.vpc.ip_range
   }
   description = "VPC values to pass for FW and Droplet resources"

@@ -14,7 +14,7 @@ resource "digitalocean_droplet" "psql-vm" {
   backups    = false
   monitoring = true
   ssh_keys   = var.ssh_keys
-  tags       = concat([digitalocean_tag.psql-fw.id], var.tags)
+  tags       = concat([digitalocean_tag.psql-fw.id, var.env], var.tags)
   vpc_uuid   = var.vpc.id
   user_data  = file("startup-script.yaml")
 }

@@ -13,5 +13,5 @@ module "doks" {
   region                        = var.region
   size                          = var.size
   vpc_uuid                      = var.vpc_uuid
-  tags                          = var.tags
+  tags                          = concat(var.tags, [var.env])
 }
