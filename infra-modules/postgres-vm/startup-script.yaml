@@ -3,6 +3,7 @@ users:
   - name: ansible
     ssh-authorized-keys:
       - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF/Tj6GnfEMeSDLpE+L3kbUZkVtbLxO7Js+QwCTS/yH1
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICNa6jnf64a4MfK6Fvu0jDoXsajI6mHzF7bA/aWQyqt+
     sudo: ["ALL=(ALL) NOPASSWD:ALL"]
     shell: /bin/bash
     lock_passwd: true # disable password login
