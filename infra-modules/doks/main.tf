@@ -15,3 +15,14 @@ module "doks" {
   vpc_uuid                      = var.vpc_uuid
   tags                          = concat(var.tags, [var.env])
 }
+
+data "digitalocean_kubernetes_cluster" "cluster" {
+  name = var.cluster_name
+  depends_on = [
+    module.doks
+  ]
+}
+
+output "cluster_id" {
+  value = data.digitalocean_kubernetes_cluster.cluster.id
+}
